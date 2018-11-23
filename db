@@ -1,0 +1,45 @@
+<%@ page import="java.sql.*"%>
+<html>
+<head>
+<title>MySQL</title>
+</head>
+<body>
+<%
+String DB_URL = "jdbc:mysql://192.168.0.38:13306/test";       //ip 서버의 test DB로 접근
+String DB_USER = "irteam";
+String DB_PASSWORD = "";
+
+Connection conn;
+Statement stmt;
+ResultSet rs = null;
+String query = "select * from people";                                     //people 테이블의 모든 데이터 가져와라
+try {
+Class.forName("com.mysql.jdbc.Driver");
+
+conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+
+stmt = conn.createStatement();
+rs = stmt.executeQuery(query);
+out.print("result: </br>");
+String s;
+while (rs.next())
+{
+out.println(rs.getString(1));
+out.println(" ");
+s = rs.getString(2);
+out.println(s);
+out.println("<br>");
+}
+rs.close();
+stmt.close();
+conn.close();
+}
+catch(Exception e){
+out.print("Exception Error...");
+out.print(e.toString());
+ }
+ finally {
+ }
+  %>
+</body>
+</html>
